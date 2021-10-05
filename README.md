@@ -1,5 +1,7 @@
 # Pub/Sub RabbitMQ using FastAPI as publisher
 
+[![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
+
 Application to try out FastAPI and RabbitMQ
 
 ## Before Running
@@ -7,14 +9,13 @@ Application to try out FastAPI and RabbitMQ
 - Create and start a virtual environment
 
 ```sh
-python3 -m venv .venv
-source .venv/bin/activate
+poetry shell
 ```
 
 - Install requirements
 
 ```sh
-pip install -r requirements
+poetry install
 ```
 
 - Download and install RabbitMQ in <https://www.rabbitmq.com/download.html>
@@ -30,7 +31,7 @@ python consumer/main.py
 - Run the publisher using
 
 ```sh
-python publisher/main.py
+uvicorn publisher.main:app --reload
 ```
 
 ## Settings
@@ -46,8 +47,8 @@ python publisher/main.py
         "--select=C,E,F,W,B,B9",
         "--exclude=.git,__pycache__,__init__.py,.mypy_cache,.pytest_cache",
         "--indent-size=4",
-        "--max-doc-length=85",
-        "--max-line-length=85",
+        "--max-doc-length=79",
+        "--max-line-length=79",
         "--verbose"
       ],
     "files.trimFinalNewlines": true,
@@ -55,10 +56,10 @@ python publisher/main.py
     "python.formatting.provider": "black",
     "python.formatting.blackArgs": [
         "--line-length",
-        "85"
+        "79"
     ],
     "[python]": {
-      "editor.rulers": [85, 85],
+      "editor.rulers": [79, 79],
       "editor.formatOnSave": true,
       "editor.formatOnPaste": false,
       "editor.formatOnSaveMode": "file"
