@@ -1,16 +1,32 @@
 #!/usr/bin/env python
 import pika
-import sys
+from fastapi import FastAPI, Body, HTTPException
 
-connection = pika.BlockingConnection(pika.ConnectionParameters(host="localhost"))
-channel = connection.channel()
+app = FastAPI(app="FastAPI and RabbitMQ")
 
-channel.exchange_declare(exchange="logs", exchange_type="fanout")
 
-message = " ".join(sys.argv[1:]) or "info: Hello World!"
+@app.get("/")
+async def root():
+    return {"message": "Hello World"}
 
-channel.basic_publish(exchange="logs", routing_key="", body=message)
 
-print(" [x] Sent %r" % message)
+@app.post("/messages")
+async def post_message(message: str = Body(...)):
+    try:
+        connection = pika.BlockingConnection(
+            pika.ConnectionParameters(host="localhost")
+        )
+        channel = connection.channel()
 
-connection.close()
+        channel.exchange_declare(exchange="logs", exchange_type="fanout")
+
+        channel.basic_publish(exchange="logs", routing_key="", body=message)
+
+        connection.close()
+
+        return "Successfully sended message do queue"
+    except Exception:
+        raise HTTPException(
+            status_code=400,
+            detail="Error when trying to send message to queue",
+        )
