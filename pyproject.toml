@@ -1,0 +1,22 @@
+[tool.poetry]
+name = "fastapi-rabbitmq"
+version = "0.1.0"
+description = "Pub/Sub RabbitMQ using FastAPI as publisher"
+authors = ["John Silver"]
+
+[tool.poetry.dependencies]
+python = "^3.9"
+pika = "1.2.0"
+fastapi = "0.68.2"
+uvicorn = "^0.15.0"
+
+[tool.poetry.dev-dependencies]
+flake8 = "3.9.2"
+black = "21.9b0"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.black]
+line-length = 79
